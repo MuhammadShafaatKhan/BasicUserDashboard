@@ -13,7 +13,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import ValidateField from '../components/ValidateField';
-
+import { MuiTelInput } from 'mui-tel-input'
 
 
 
@@ -24,6 +24,7 @@ const defaultTheme = createTheme();
 
 export default function SignUp() {
   const [email, setEmail] = useState('')
+  const [telNum, setTelNum] = useState('')
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -42,6 +43,10 @@ export default function SignUp() {
     setEmail(event.target.value)
   }
 
+  const settingTelNum = (event) => {
+    console.log(event)
+    setTelNum(( event))
+  }
   return (
     <ThemeProvider theme={defaultTheme}>
       <Container component="main" maxWidth="xs">
@@ -94,6 +99,17 @@ export default function SignUp() {
                   onChange={settingEmail}
                 />
                 <ValidateField email={email}/>
+              </Grid>
+              <Grid item xs={12}>
+                <MuiTelInput 
+                  fullWidth 
+                  id='telNum' 
+                  label='Telephone number' 
+                  name="telNum" 
+                  defaultCountry="AU" 
+                  value={telNum} 
+                  onChange={settingTelNum} 
+                />
               </Grid>
               <Grid item xs={12}>
                 <TextField
