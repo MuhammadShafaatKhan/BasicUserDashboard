@@ -1,5 +1,6 @@
 // Reference: https://github.com/mui/material-ui/tree/v5.16.4/docs/data/material/getting-started/templates/sign-up
 import * as React from 'react';
+import { useState } from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -13,6 +14,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import validator from 'validator';
 
 
 
@@ -20,15 +22,33 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 const defaultTheme = createTheme();
 
+function ValidateField({email}){
+  if (!validator.isEmail(email) && email.length !== 0){
+          return(
+            <Typography sx={{color:'red', paddingLeft:'2px'}} variant="body2">Email is not valid</Typography>
+          )
+        }
+}
+
 export default function SignUp() {
+  const [email, setEmail] = useState('')
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
+    // if (!validator.isEmail(data.get('email'))){
+    //       alert('Email is not valid')
+    //     }
     console.log({
       email: data.get('email'),
       password: data.get('password'),
     });
   };
+
+  const settingEmail= (event) => {
+    event.preventDefault();
+    console.log(event.target.value)
+    setEmail(event.target.value)
+  }
 
   return (
     <ThemeProvider theme={defaultTheme}>
@@ -79,7 +99,9 @@ export default function SignUp() {
                   label="Email Address"
                   name="email"
                   autoComplete="email"
+                  onChange={settingEmail}
                 />
+                <ValidateField email={email}/>
               </Grid>
               <Grid item xs={12}>
                 <TextField
