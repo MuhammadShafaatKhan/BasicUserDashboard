@@ -103,6 +103,7 @@ export default function SignUp() {
               <Grid item xs={12}>
                 <MuiTelInput 
                   fullWidth 
+                  autoComplete="tel"
                   id='telNum' 
                   label='Telephone number' 
                   name="telNum" 
@@ -110,6 +111,7 @@ export default function SignUp() {
                   value={telNum} 
                   onChange={settingTelNum} 
                 />
+                <ValidateField phone={telNum}/>
               </Grid>
               <Grid item xs={12}>
                 <TextField
