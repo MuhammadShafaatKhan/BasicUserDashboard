@@ -6,7 +6,7 @@ function ValidateField({ email, phone }) {
   if (email) {
     if (!validator.isEmail(email) && email.length !== 0) {
       return (
-        <Typography sx={{ color: 'red', paddingLeft: '2px' }} variant="body2">Email is not valid</Typography>
+        <Typography sx={{ color: 'red', paddingLeft: '2px' }} variant="body2">Email Address is not valid</Typography>
       )
     }
   } else if (phone) {
@@ -14,7 +14,7 @@ function ValidateField({ email, phone }) {
     let formattedPhone = phone.replace(/\s/g, '')
     if (!validator.isMobilePhone(formattedPhone) ) {
       return (
-        <Typography sx={{ color: 'red', paddingLeft: '2px' }} variant="body2">Phone number is not valid</Typography>
+        <Typography sx={{ color: 'red', paddingLeft: '2px' }} variant="body2">Telephone number is not valid</Typography>
       )
     }
   }
