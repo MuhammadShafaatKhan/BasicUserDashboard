@@ -41,16 +41,6 @@ export default function SignUp() {
     });
   };
 
-  const settingEmail= (event) => {
-    event.preventDefault();
-    console.log(event.target.value)
-    setEmail(event.target.value)
-  }
-
-  const settingTelNum = (event) => {
-    console.log(event)
-    setTelNum(( event))
-  }
   return (
     <ThemeProvider theme={defaultTheme}>
       <Container component="main" maxWidth="xs">
@@ -100,7 +90,7 @@ export default function SignUp() {
                   label="Email Address"
                   name="email"
                   autoComplete="email"
-                  onChange={settingEmail}
+                  onChange={(event) =>{event.preventDefault(); setEmail(event.target.value)}}
                 />
                 <ValidateField email={email}/>
               </Grid>
@@ -113,7 +103,7 @@ export default function SignUp() {
                   name="telNum" 
                   defaultCountry="AU" 
                   value={telNum} 
-                  onChange={settingTelNum} 
+                  onChange={(event) =>{ setTelNum(event)}}
                 />
                 <ValidateField phone={telNum}/>
               </Grid>
