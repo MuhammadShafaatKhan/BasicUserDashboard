@@ -25,9 +25,13 @@ const defaultTheme = createTheme();
 export default function SignUp() {
   const [email, setEmail] = useState('')
   const [telNum, setTelNum] = useState('')
+  const [password, setPassword] = useState('')
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
+    // TODO: if validate field message appearing or any required field missing then 
+    // dont submit data instead give alert that these fields are required and these
+    // fields are filled incorrectly
     // if (!validator.isEmail(data.get('email'))){
     //       alert('Email is not valid')
     //     }
@@ -122,7 +126,10 @@ export default function SignUp() {
                   type="password"
                   id="password"
                   autoComplete="off"
+                  value={password}
+                  onChange={(event) =>{event.preventDefault(); setPassword(event.target.value)}}
                 />
+                <ValidateField password={password}/>
               </Grid>
               
             </Grid>

@@ -1,12 +1,12 @@
 import validator from 'validator';
 import Typography from '@mui/material/Typography';
-// TODO: Use isStrongPassword validator to validate password
 
-function ValidateField({ email, phone }) {
+function ValidateField({ email, phone,  password }) {
+  const style = {"color": "red", "paddingLeft": "2px" }
   if (email) {
     if (!validator.isEmail(email) && email.length !== 0) {
       return (
-        <Typography sx={{ color: 'red', paddingLeft: '2px' }} variant="body2">Email Address is not valid</Typography>
+        <Typography sx={style} variant="body2">Email Address is not valid</Typography>
       )
     }
   } else if (phone) {
@@ -14,7 +14,27 @@ function ValidateField({ email, phone }) {
     let formattedPhone = phone.replace(/\s/g, '')
     if (!validator.isMobilePhone(formattedPhone) ) {
       return (
-        <Typography sx={{ color: 'red', paddingLeft: '2px' }} variant="body2">Telephone number is not valid</Typography>
+        <Typography sx={style} variant="body2">Telephone number is not valid</Typography>
+      )
+    }
+  } else if (password){
+    console.log('password is: ', password)
+    if (!validator.isStrongPassword(password)){
+      return (
+        <>
+        <Typography 
+          sx={style} 
+          variant="body2"
+        >
+          Password must contain at least 8 characters including:
+          </Typography>
+          <Typography component="ul">
+            <Typography component="li"  variant="body2" sx={style}  >minimum 1 Lowercase character</Typography>
+            <Typography component="li" variant="body2" sx={style}  >minimum 1 Uppercase character</Typography>
+            <Typography component="li" variant="body2" sx={style} >minimum 1 Number</Typography>
+            <Typography component="li" variant="body2" sx={style} >minimum 1 Symbol</Typography>
+          </Typography>
+          </>
       )
     }
   }
