@@ -27,10 +27,12 @@ function ValidateField({ email, phone,  password, setValid, alreadyValid }) {
     // any space is going to be removed using this regex replace(/\s/g, '')
     let formattedPhone = phone.replace(/\s/g, '')
     if (!validator.isMobilePhone(formattedPhone) ) {
+      updateValidFieldsState(alreadyValid, 'phone', setValid, false)
       return (
         <Typography sx={style} variant="body2">Telephone number is not valid</Typography>
       )
     }
+    updateValidFieldsState(alreadyValid, 'phone', setValid, true)
   } else if (password){
     console.log('password is: ', password)
     if (!validator.isStrongPassword(password)){

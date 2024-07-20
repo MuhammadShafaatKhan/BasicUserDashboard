@@ -131,7 +131,7 @@ export default function SignUp() {
                   value={telNum} 
                   onChange={(event) =>{ setTelNum(event)}}
                 />
-                <ValidateField phone={telNum}/>
+                <ValidateField phone={telNum} setValid={setFieldsValid} alreadyValid={fieldsValid}/>
               </Grid>
               <Grid item xs={12}>
                 <TextField
