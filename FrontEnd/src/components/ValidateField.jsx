@@ -26,9 +26,10 @@ function ValidateField({ email, phone,  password }) {
           sx={style} 
           variant="body2"
         >
-          Password must contain at least 8 characters including:
+          Password must contain:
           </Typography>
           <Typography component="ul">
+            <Typography component="li"  variant="body2" sx={style}  >minimum 8 characters</Typography>
             <Typography component="li"  variant="body2" sx={style}  >minimum 1 Lowercase character</Typography>
             <Typography component="li" variant="body2" sx={style}  >minimum 1 Uppercase character</Typography>
             <Typography component="li" variant="body2" sx={style} >minimum 1 Number</Typography>
