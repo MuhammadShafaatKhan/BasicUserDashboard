@@ -30,10 +30,7 @@ export default function SignUp() {
   const [fieldsValid, setFieldsValid] = useState({email:true,phone:true,password:true})
   const handleSubmit = (event) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    // TODO: if validate field message appearing  then 
-    // dont submit data instead give alert that these fields are filled incorrectly
-    // or alrt that fill data correctly. 
+    const data = new FormData(event.currentTarget); 
     // TODO: if mobile number only contains area code then dont submit the number
     // get area code by checking first word before removing spaces. or by getting
     // all area codes from here https://github.com/jackocnr/intl-tel-input
@@ -145,7 +142,7 @@ export default function SignUp() {
                   value={password}
                   onChange={(event) =>{event.preventDefault(); setPassword(event.target.value)}}
                 />
-                <ValidateField password={password}/>
+                <ValidateField password={password} setValid={setFieldsValid} alreadyValid={fieldsValid}/>
               </Grid>
               
             </Grid>

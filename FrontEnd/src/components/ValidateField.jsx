@@ -36,6 +36,7 @@ function ValidateField({ email, phone,  password, setValid, alreadyValid }) {
   } else if (password){
     console.log('password is: ', password)
     if (!validator.isStrongPassword(password)){
+      updateValidFieldsState(alreadyValid, 'password', setValid, false)
       return (
         <>
           <Typography 
@@ -105,6 +106,7 @@ function ValidateField({ email, phone,  password, setValid, alreadyValid }) {
         </>
       )
     }
+    updateValidFieldsState(alreadyValid, 'password', setValid, true)
   }
 }
 
