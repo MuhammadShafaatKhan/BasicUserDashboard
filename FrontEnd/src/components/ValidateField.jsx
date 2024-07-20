@@ -1,14 +1,28 @@
 import validator from 'validator';
 import Typography from '@mui/material/Typography';
+// TODO: getting Warning: "Cannot update a component (`SignUp`) while rendering a 
+// different component (`ValidateField`)." Tried to fix it but couldnt. And site 
+// is working fine. So ignoring this warning for now.
 
-function ValidateField({ email, phone,  password }) {
+function updateValidFieldsState(alreadyValid, fieldName, setValid, value){
+  if (alreadyValid[fieldName] === !value){
+    const updatedValid = {...alreadyValid}
+    updatedValid[fieldName] = value
+    setValid(updatedValid)
+}
+}
+function ValidateField({ email, phone,  password, setValid, alreadyValid }) {
   const style = {"color": "red", "paddingLeft": "2px" }
   if (email) {
+    console.log('sv', setValid)
+    console.log('av', alreadyValid)
     if (!validator.isEmail(email) && email.length !== 0) {
+    updateValidFieldsState(alreadyValid, 'email', setValid, false)
       return (
         <Typography sx={style} variant="body2">Email Address is not valid</Typography>
       )
     }
+    updateValidFieldsState(alreadyValid, 'email', setValid, true)
   } else if (phone) {
     // any space is going to be removed using this regex replace(/\s/g, '')
     let formattedPhone = phone.replace(/\s/g, '')

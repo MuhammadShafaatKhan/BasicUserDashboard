@@ -26,6 +26,8 @@ export default function SignUp() {
   const [email, setEmail] = useState('')
   const [telNum, setTelNum] = useState('')
   const [password, setPassword] = useState('')
+  // TODO: check this fields validity dynamicly instead of hardcoded
+  const [fieldsValid, setFieldsValid] = useState({email:true,phone:true,password:true})
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -48,6 +50,14 @@ export default function SignUp() {
     //     break;
     // }
     // }
+    for (const field in fieldsValid) {
+      console.log('f: ', fieldsValid)
+      if (fieldsValid[field] === false){
+        alert('Please fill the data correctly')
+        break;
+      }
+    }
+    
     console.log({
       firstName: data.get('firstName'),
       lastName: data.get('lastName'),
@@ -108,7 +118,7 @@ export default function SignUp() {
                   autoComplete="email"
                   onChange={(event) =>{event.preventDefault(); setEmail(event.target.value)}}
                 />
-                <ValidateField email={email}/>
+                <ValidateField email={email} setValid={setFieldsValid} alreadyValid={fieldsValid}/>
               </Grid>
               <Grid item xs={12}>
                 <MuiTelInput 
