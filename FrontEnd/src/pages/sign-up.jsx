@@ -26,6 +26,7 @@ export default function SignUp() {
   const [email, setEmail] = useState('')
   const [telNum, setTelNum] = useState('')
   const [password, setPassword] = useState('')
+  const requiredFields = ['firstName', 'lastName', 'email', 'password']
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -35,8 +36,18 @@ export default function SignUp() {
     // if (!validator.isEmail(data.get('email'))){
     //       alert('Email is not valid')
     //     }
+    // TODO: Pass better alert notification
+    for (const field of requiredFields) {
+      if (data.get(field).length === 0){
+        alert('Please fill all required fields')
+        break;
+    }
+    }
     console.log({
+      firstName: data.get('firstName'),
+      lastName: data.get('lastName'),
       email: data.get('email'),
+      telNum: data.get('telNum'),
       password: data.get('password'),
     });
   };
