@@ -26,23 +26,28 @@ export default function SignUp() {
   const [email, setEmail] = useState('')
   const [telNum, setTelNum] = useState('')
   const [password, setPassword] = useState('')
-  const requiredFields = ['firstName', 'lastName', 'email', 'password']
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    // TODO: if validate field message appearing or any required field missing then 
-    // dont submit data instead give alert that these fields are required and these
-    // fields are filled incorrectly
-    // if (!validator.isEmail(data.get('email'))){
-    //       alert('Email is not valid')
-    //     }
+    // TODO: if validate field message appearing  then 
+    // dont submit data instead give alert that these fields are filled incorrectly
+    // or alrt that fill data correctly. 
+    // TODO: if mobile number only contains area code then dont submit the number
+    // get area code by checking first word before removing spaces. or by getting
+    // all area codes from here https://github.com/jackocnr/intl-tel-input
     // TODO: Pass better alert notification
-    for (const field of requiredFields) {
-      if (data.get(field).length === 0){
-        alert('Please fill all required fields')
-        break;
-    }
-    }
+    // TODO: hash password on frontend with a randomly generated salt. Then on backend
+    // hash that password again with another randomly generated salt.
+    // TODO: once complete dashboard functioning, then check better authentication method
+    // to be implemented.
+    
+    // noValidate attribute have been removed from form, now this alert is unnecesory
+    // for (const field of requiredFields) {
+    //   if (data.get(field).length === 0){
+    //     alert('Please fill all required fields')
+    //     break;
+    // }
+    // }
     console.log({
       firstName: data.get('firstName'),
       lastName: data.get('lastName'),
@@ -70,7 +75,7 @@ export default function SignUp() {
           <Typography component="h1" variant="h5">
             Sign up
           </Typography>
-          <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
+          <Box component="form"  onSubmit={handleSubmit} sx={{ mt: 3 }}>
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
                 <TextField
