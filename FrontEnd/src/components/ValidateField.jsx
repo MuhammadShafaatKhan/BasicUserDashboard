@@ -22,20 +22,71 @@ function ValidateField({ email, phone,  password }) {
     if (!validator.isStrongPassword(password)){
       return (
         <>
-        <Typography 
-          sx={style} 
-          variant="body2"
-        >
-          Password must contain:
+          <Typography 
+            sx={style} 
+            variant="body2"
+          >
+            Password must contain:
           </Typography>
-          <Typography component="ul">
-            <Typography component="li"  variant="body2" sx={{color: "red", paddingLeft: "2px", ...(password.length >= 8 && {color:"green"})}}  >minimum 8 characters</Typography>
-            <Typography component="li"  variant="body2" sx={{color: "red", paddingLeft: "2px", ...( /[a-z]/.test(password) && {color:"green"})}} >minimum 1 Lowercase character</Typography>
-            <Typography component="li" variant="body2" sx={{color: "red", paddingLeft: "2px", ...( /[A-Z]/.test(password) && {color:"green"})}} >minimum 1 Uppercase character</Typography>
-            <Typography component="li" variant="body2" sx={{color: "red", paddingLeft: "2px", ...( /[0-9]/.test(password) && {color:"green"})}}>minimum 1 Number</Typography>
-            <Typography component="li" variant="body2" sx={{color: "red", paddingLeft: "2px", ...( /[-#!$@£%^&*()_+|~=`{}\[\]:";'<>?,.\/\\ ]/.test(password) && {color:"green"})}} >minimum 1 Symbol</Typography>
+          <Typography 
+            component="ul"
+          >
+            <Typography 
+              component="li"  
+              variant="body2" 
+              sx={{ 
+                color: "red", 
+                paddingLeft: "2px", 
+                ...(password.length >= 8 && {color:"green"})
+                }}  
+            >
+              minimum 8 characters
+            </Typography>
+            <Typography 
+              component="li"  
+              variant="body2" 
+              sx={{
+                color: "red", 
+                paddingLeft: "2px", 
+                ...( /[a-z]/.test(password) && {color:"green"})
+              }} 
+            >
+              minimum 1 Lowercase character
+            </Typography>
+            <Typography 
+              component="li" 
+              variant="body2" 
+              sx={{
+                color: "red", 
+                paddingLeft: "2px", 
+                ...( /[A-Z]/.test(password) && {color:"green"})
+              }} 
+            >
+              minimum 1 Uppercase character
+            </Typography>
+            <Typography 
+              component="li" 
+              variant="body2" 
+              sx={{
+                color: "red", 
+                paddingLeft: "2px", 
+                ...( /[0-9]/.test(password) && {color:"green"})
+              }}
+            >
+              minimum 1 Number
+            </Typography>
+            <Typography 
+              component="li" 
+              variant="body2" 
+              sx={{color: "red", 
+              paddingLeft: "2px", 
+              ...( /[-#!$@£%^&*()_+|~=`{}\[\]:";'<>?,.\/\\ ]/.test(password) && {color:"green"})
+              }} 
+            >
+              minimum 1 Symbol
+            </Typography>
           </Typography>
-          </>
+        </>
       )
     }
   }
