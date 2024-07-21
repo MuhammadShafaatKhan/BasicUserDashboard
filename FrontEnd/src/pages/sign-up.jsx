@@ -14,6 +14,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import CloseIcon from '@mui/icons-material/Close'
+import AttachFileIcon from '@mui/icons-material/AttachFile'
 import ValidateField from '../components/ValidateField';
 import { MuiTelInput } from 'mui-tel-input'
 import { MuiFileInput } from 'mui-file-input'
@@ -30,15 +31,31 @@ export default function SignUp() {
   const [telNum, setTelNum] = useState('')
   const [password, setPassword] = useState('')
   // TODO: check this fields validity dynamicly instead of hardcoded
-  const [fieldsValid, setFieldsValid] = useState({email:true,phone:true,password:true, profileImg:true})
+  const [
+    fieldsValid, 
+    setFieldsValid
+  ] = useState({
+                email:true,
+                phone:true,
+                password:true, 
+                profileImg:true,
+                resumeDoc:true
+              })
   const [imgFile, setImgFile] = useState(null)
   const [imgSize, setImgSize] = useState(0)
+  const [docFile, setDocFile] = useState(null)
+  const [docSize, setDocSize] = useState(0)
+
+  const handleDocFileChange = (newFile) => {
+    setDocFile(newFile)
+  }
   const handleImgFileChange = (newFile) => {
     setImgFile(newFile)
   }
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget); 
+    console.log('dataa: ', data)
     // TODO: if mobile number only contains area code then dont submit the number
     // get area code by checking first word before removing spaces. or by getting
     // all area codes from here https://github.com/jackocnr/intl-tel-input
@@ -69,6 +86,7 @@ export default function SignUp() {
       email: data.get('email'),
       telNum: data.get('telNum'),
       profileImg: data.get('profileImg'),
+      resumeDoc: data.get('resumeDoc'),
       password: data.get('password'),
     });
   };
@@ -131,7 +149,7 @@ export default function SignUp() {
                   fullWidth 
                   autoComplete="tel"
                   id='telNum' 
-                  label='Telephone number' 
+                  label='Telephone number (Optional)' 
                   name="telNum" 
                   defaultCountry="AU" 
                   value={telNum} 
@@ -143,11 +161,11 @@ export default function SignUp() {
                 <MuiFileInput 
                   value={imgFile} 
                   fullWidth
-                  label="Profile Picture"
+                  label="Profile Picture (Optional)"
                   id="profileImg"
                   name="profileImg"
                   placeholder="Upload Profile Picture"
-                  inputProps={{ accept: 'image/*' }}
+                  InputProps={{inputProps: { accept: 'image/*' }, startAdornment: <AttachFileIcon />}}
                   getSizeText={(value) =>{
                     let img = value;
                     if (img){
@@ -163,6 +181,31 @@ export default function SignUp() {
                 />
                 <ValidateField imgSize={imgSize} imgFile={imgFile} setValid={setFieldsValid} alreadyValid={fieldsValid}/>
               </Grid>
+              <Grid item xs={12}>
+                <MuiFileInput 
+                  value={docFile} 
+                  fullWidth
+                  label="Resume (Optional)"
+                  id="resumeDoc"
+                  name="resumeDoc"
+                  placeholder="Upload Resume"
+                  InputProps={{inputProps: { accept: '.doc, .docx, .pdf' }, startAdornment: <AttachFileIcon />}}
+                  getSizeText={(value) =>{
+                    let doc = value;
+                    if (doc){
+                      if (doc.size)
+                        setDocSize(doc.size)
+                    }
+                  }}
+                  onChange={handleDocFileChange} 
+                  clearIconButtonProps={{
+                    title: "Remove",
+                    children: <CloseIcon fontSize="small" />,
+                  }}
+                />
+                <ValidateField docSize={docSize} docFile={docFile} setValid={setFieldsValid} alreadyValid={fieldsValid}/>
+              </Grid>
+              
               <Grid item xs={12}>
                 <TextField
                   required

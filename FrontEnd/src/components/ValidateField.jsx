@@ -11,7 +11,7 @@ function updateValidFieldsState(alreadyValid, fieldName, setValid, value){
     setValid(updatedValid)
 }
 }
-function ValidateField({ email, phone, imgSize, imgFile,  password, setValid, alreadyValid }) {
+function ValidateField({ email, phone, imgSize, imgFile,docSize, docFile,  password, setValid, alreadyValid }) {
   const style = {"color": "red", "paddingLeft": "2px" }
   if (typeof email !== 'undefined') {
     if (!validator.isEmail(email) && email.length !== 0) {
@@ -116,6 +116,16 @@ function ValidateField({ email, phone, imgSize, imgFile,  password, setValid, al
       )
     }
     updateValidFieldsState(alreadyValid, 'profileImg', setValid, true)
+  } else if (typeof docSize !== 'undefined') {
+    // value size should smaller than or equal to 1048576 bit = 1MB
+    console.log('docsize: ', docSize)
+    if (docSize > 1048576 && docFile !== null){
+      updateValidFieldsState(alreadyValid, 'resumeDoc', setValid, false)
+      return (
+        <Typography sx={style} variant="body2">Document size should be smaller than 1MB</Typography>
+      )
+    }
+    updateValidFieldsState(alreadyValid, 'resumeDoc', setValid, true)
   }
 }
 
