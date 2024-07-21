@@ -1,4 +1,5 @@
 // Reference: https://github.com/mui/material-ui/tree/v5.16.4/docs/data/material/getting-started/templates/sign-up
+// TODO: Add resume upload (optional) option max size 1MB
 import * as React from 'react';
 import { useState } from 'react';
 import Avatar from '@mui/material/Avatar';
@@ -12,8 +13,10 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import CloseIcon from '@mui/icons-material/Close'
 import ValidateField from '../components/ValidateField';
 import { MuiTelInput } from 'mui-tel-input'
+import { MuiFileInput } from 'mui-file-input'
 
 
 
@@ -27,7 +30,12 @@ export default function SignUp() {
   const [telNum, setTelNum] = useState('')
   const [password, setPassword] = useState('')
   // TODO: check this fields validity dynamicly instead of hardcoded
-  const [fieldsValid, setFieldsValid] = useState({email:true,phone:true,password:true})
+  const [fieldsValid, setFieldsValid] = useState({email:true,phone:true,password:true, profileImg:true})
+  const [imgFile, setImgFile] = useState(null)
+  const [imgSize, setImgSize] = useState(0)
+  const handleImgFileChange = (newFile) => {
+    setImgFile(newFile)
+  }
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget); 
@@ -60,6 +68,7 @@ export default function SignUp() {
       lastName: data.get('lastName'),
       email: data.get('email'),
       telNum: data.get('telNum'),
+      profileImg: data.get('profileImg'),
       password: data.get('password'),
     });
   };
@@ -129,6 +138,30 @@ export default function SignUp() {
                   onChange={(event) =>{ setTelNum(event)}}
                 />
                 <ValidateField phone={telNum} setValid={setFieldsValid} alreadyValid={fieldsValid}/>
+              </Grid>
+              <Grid item xs={12}>
+                <MuiFileInput 
+                  value={imgFile} 
+                  fullWidth
+                  label="Profile Picture"
+                  id="profileImg"
+                  name="profileImg"
+                  placeholder="Upload Profile Picture"
+                  inputProps={{ accept: 'image/*' }}
+                  getSizeText={(value) =>{
+                    let img = value;
+                    if (img){
+                      if (img.size)
+                        setImgSize(img.size)
+                    }
+                  }}
+                  onChange={handleImgFileChange} 
+                  clearIconButtonProps={{
+                    title: "Remove",
+                    children: <CloseIcon fontSize="small" />,
+                  }}
+                />
+                <ValidateField imgSize={imgSize} imgFile={imgFile} setValid={setFieldsValid} alreadyValid={fieldsValid}/>
               </Grid>
               <Grid item xs={12}>
                 <TextField
