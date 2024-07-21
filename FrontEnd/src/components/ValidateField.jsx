@@ -13,9 +13,7 @@ function updateValidFieldsState(alreadyValid, fieldName, setValid, value){
 }
 function ValidateField({ email, phone, imgSize, imgFile,  password, setValid, alreadyValid }) {
   const style = {"color": "red", "paddingLeft": "2px" }
-  if (email) {
-    console.log('sv', setValid)
-    console.log('av', alreadyValid)
+  if (typeof email !== 'undefined') {
     if (!validator.isEmail(email) && email.length !== 0) {
     updateValidFieldsState(alreadyValid, 'email', setValid, false)
       return (
@@ -23,19 +21,20 @@ function ValidateField({ email, phone, imgSize, imgFile,  password, setValid, al
       )
     }
     updateValidFieldsState(alreadyValid, 'email', setValid, true)
-  } else if (phone) {
+  } else if (typeof phone !== 'undefined') {
     // any space is going to be removed using this regex replace(/\s/g, '')
     let formattedPhone = phone.replace(/\s/g, '')
-    if (!validator.isMobilePhone(formattedPhone) ) {
+    
+    if (!validator.isMobilePhone(formattedPhone) && phone.length !== 0 ) {
       updateValidFieldsState(alreadyValid, 'phone', setValid, false)
       return (
         <Typography sx={style} variant="body2">Telephone number is not valid</Typography>
       )
     }
     updateValidFieldsState(alreadyValid, 'phone', setValid, true)
-  } else if (password){
+  } else if (typeof password !== 'undefined'){
     console.log('password is: ', password)
-    if (!validator.isStrongPassword(password)){
+    if (!validator.isStrongPassword(password) && password.length !== 0){
       updateValidFieldsState(alreadyValid, 'password', setValid, false)
       return (
         <>
@@ -107,7 +106,7 @@ function ValidateField({ email, phone, imgSize, imgFile,  password, setValid, al
       )
     }
     updateValidFieldsState(alreadyValid, 'password', setValid, true)
-  } else if (imgSize) {
+  } else if (typeof imgSize !== 'undefined') {
     // value size should smaller than or equal to 1048576 bit = 1MB
     console.log('imgsize: ', imgSize)
     if (imgSize > 1048576 && imgFile !== null){
