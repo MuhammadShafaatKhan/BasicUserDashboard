@@ -1,5 +1,6 @@
 import validator from 'validator';
 import Typography from '@mui/material/Typography';
+import removeChars from '../helper-functions/removeChars.js'
 // TODO: getting Warning: "Cannot update a component (`SignUp`) while rendering a 
 // different component (`ValidateField`)." Tried to fix it but couldnt. And site 
 // is working fine. So ignoring this warning for now.
@@ -22,8 +23,8 @@ function ValidateField({ email, phone, imgSize, imgFile,docSize, docFile,  passw
     }
     updateValidFieldsState(alreadyValid, 'email', setValid, true)
   } else if (typeof phone !== 'undefined') {
-    // any space is going to be removed using this regex replace(/\s/g, '')
-    let formattedPhone = phone.replace(/\s/g, '')
+    // any space is going to be removed using this regex /\s/g
+    let formattedPhone = removeChars(phone, /\s/g)
     
     if (!validator.isMobilePhone(formattedPhone) && phone.length !== 0 ) {
       updateValidFieldsState(alreadyValid, 'phone', setValid, false)
