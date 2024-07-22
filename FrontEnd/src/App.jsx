@@ -1,5 +1,5 @@
-// TODO: for backend use json server: https://dev.to/jyeett/the-basic-necessities-of-a-mock-user-authentication-with-json-server-auth-2onj
-// once complete dashboard working, move backend to strapi
+// TODO: for backend use strapi
+// first follow this tute https://strapi.io/blog/strapi-authentication-with-react
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import './App.css'
 import SignUp from './pages/sign-up'

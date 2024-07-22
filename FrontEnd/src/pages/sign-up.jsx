@@ -1,5 +1,7 @@
 // Reference: https://github.com/mui/material-ui/tree/v5.16.4/docs/data/material/getting-started/templates/sign-up
-// TODO: Add resume upload (optional) option max size 1MB
+// TODO: Remove all chars other than numbers from abn before posting to backend.
+// TODO: Remove all chars other than numbers and '+' from phone number before posting to backend.
+
 import * as React from 'react';
 import { useState } from 'react';
 import Avatar from '@mui/material/Avatar';
@@ -29,6 +31,7 @@ const defaultTheme = createTheme();
 export default function SignUp() {
   const [email, setEmail] = useState('')
   const [telNum, setTelNum] = useState('')
+  const [abn, setAbn] = useState('')
   const [password, setPassword] = useState('')
   // TODO: check this fields validity dynamicly instead of hardcoded
   const [
@@ -39,7 +42,8 @@ export default function SignUp() {
                 phone:true,
                 password:true, 
                 profileImg:true,
-                resumeDoc:true
+                resumeDoc:true,
+                abn: true
               })
   const [imgFile, setImgFile] = useState(null)
   const [imgSize, setImgSize] = useState(0)
@@ -156,6 +160,16 @@ export default function SignUp() {
                   onChange={(event) =>{ setTelNum(event)}}
                 />
                 <ValidateField phone={telNum} setValid={setFieldsValid} alreadyValid={fieldsValid}/>
+              </Grid>
+              <Grid item xs={12}>
+              <TextField
+                  fullWidth
+                  id="abn"
+                  label="ABN number (Optional)"
+                  name="abn"
+                  onChange={(event) =>{event.preventDefault(); setAbn(event.target.value)}}
+                />
+                <ValidateField abn={abn} setValid={setFieldsValid} alreadyValid={fieldsValid}/>
               </Grid>
               <Grid item xs={12}>
                 <MuiFileInput 

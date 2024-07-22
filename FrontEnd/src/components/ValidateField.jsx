@@ -1,5 +1,6 @@
 import validator from 'validator';
 import Typography from '@mui/material/Typography';
+import isValidABN from 'is-valid-abn'
 import removeChars from '../helper-functions/removeChars.js'
 // TODO: getting Warning: "Cannot update a component (`SignUp`) while rendering a 
 // different component (`ValidateField`)." Tried to fix it but couldnt. And site 
@@ -12,7 +13,7 @@ function updateValidFieldsState(alreadyValid, fieldName, setValid, value){
     setValid(updatedValid)
 }
 }
-function ValidateField({ email, phone, imgSize, imgFile,docSize, docFile,  password, setValid, alreadyValid }) {
+function ValidateField({ email, phone, abn, imgSize, imgFile,docSize, docFile,  password, setValid, alreadyValid }) {
   const style = {"color": "red", "paddingLeft": "2px" }
   if (typeof email !== 'undefined') {
     if (!validator.isEmail(email) && email.length !== 0) {
@@ -33,6 +34,14 @@ function ValidateField({ email, phone, imgSize, imgFile,docSize, docFile,  passw
       )
     }
     updateValidFieldsState(alreadyValid, 'phone', setValid, true)
+  } else if (typeof abn !== 'undefined'){
+    if (!isValidABN(abn) && abn.length !== 0) {
+      updateValidFieldsState(alreadyValid, 'abn', setValid, false)
+      return (
+        <Typography sx={style} variant="body2">ABN number is not valid</Typography>
+      )
+    }
+    updateValidFieldsState(alreadyValid, 'abn', setValid, true)
   } else if (typeof password !== 'undefined'){
     console.log('password is: ', password)
     if (!validator.isStrongPassword(password) && password.length !== 0){
