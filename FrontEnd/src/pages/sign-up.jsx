@@ -206,7 +206,7 @@ export default function SignUp() {
                   label="Profile Picture (Optional)"
                   id="profileImg"
                   name="profileImg"
-                  placeholder="Upload Profile Picture"
+                  placeholder="Upload Profile Picture (Optional)"
                   InputProps={{inputProps: { accept: 'image/*' }, startAdornment: <AttachFileIcon />}}
                   getSizeText={(value) =>{
                     let img = value;
@@ -230,7 +230,7 @@ export default function SignUp() {
                   label="Resume (Optional)"
                   id="resumeDoc"
                   name="resumeDoc"
-                  placeholder="Upload Resume"
+                  placeholder="Upload Resume (Optional)"
                   InputProps={{inputProps: { accept: '.doc, .docx, .pdf' }, startAdornment: <AttachFileIcon />}}
                   getSizeText={(value) =>{
                     let doc = value;
