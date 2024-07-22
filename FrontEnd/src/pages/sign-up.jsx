@@ -1,5 +1,4 @@
 // Reference: https://github.com/mui/material-ui/tree/v5.16.4/docs/data/material/getting-started/templates/sign-up
-// TODO: Remove all chars other than numbers from abn before posting to backend.
 // TODO: Remove all chars other than numbers and '+' from phone number before posting to backend.
 
 import * as React from 'react';
@@ -21,7 +20,7 @@ import ValidateField from '../components/ValidateField';
 import { MuiTelInput } from 'mui-tel-input'
 import { MuiFileInput } from 'mui-file-input'
 import intlTelInput from 'intl-tel-input';
-
+import removeChars from '../helper-functions/removeChars.js'
 
 
 // TODO remove, this demo shouldn't need to reset the theme.
@@ -66,11 +65,21 @@ export default function SignUp() {
     for (const pair of data.entries()) {
       console.log(pair[0], pair[1]);
     }
-    // if mobile number only contains area code then dont submit the number
+    // if telephone number only contains area code then dont submit the number
     const countryData = intlTelInput.getCountryData();
     const countryCodes = countryData.map((country) => "+"+country.dialCode)
     if (countryCodes.includes(data.get('telNum')))
       data.delete('telNum')
+    // remove all chars other than numbers from abn number
+    let formattedABN = removeChars(data.get('abn'), /[^0-9]/g)
+    if (formattedABN.length !== 0)
+      data.set('abn', formattedABN)
+    // remove all chars other than numbers and '+' from telephone number
+    if (data.get('telNum') !== null){
+      let formattedTel = removeChars(data.get('telNum'), /[^0-9+]/g)
+      if (formattedTel.length !== 0)
+        data.set('telNum', formattedTel)
+    }
     for (const pair of data.entries()) {
       console.log(pair[0], pair[1]);
     }
@@ -88,7 +97,6 @@ export default function SignUp() {
     // }
     // }
     for (const field in fieldsValid) {
-      console.log('f: ', fieldsValid)
       if (fieldsValid[field] === false){
         alert('Please fill the data correctly')
         break;
