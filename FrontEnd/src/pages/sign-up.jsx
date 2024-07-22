@@ -1,6 +1,4 @@
 // Reference: https://github.com/mui/material-ui/tree/v5.16.4/docs/data/material/getting-started/templates/sign-up
-// TODO: Remove all chars other than numbers and '+' from phone number before posting to backend.
-
 import * as React from 'react';
 import { useState } from 'react';
 import Avatar from '@mui/material/Avatar';
@@ -79,6 +77,17 @@ export default function SignUp() {
       let formattedTel = removeChars(data.get('telNum'), /[^0-9+]/g)
       if (formattedTel.length !== 0)
         data.set('telNum', formattedTel)
+    }
+    // if optional elements are empty in formdata then delete them from formdata
+    // Note: Array.from method must be used when deleting an entry of form data while
+    // looping, otherwise entries will not be deleted properly
+    // Reference: https://stackoverflow.com/a/57127112/16185710
+    for (const pair of Array.from(data.entries())) {
+      if (pair[1].length === 0)
+        data.delete(pair[0])
+      // removing empty file object from data
+      if (pair[1].name?.length === 0 && pair[1].size === 0)
+        data.delete(pair[0])
     }
     for (const pair of data.entries()) {
       console.log(pair[0], pair[1]);
