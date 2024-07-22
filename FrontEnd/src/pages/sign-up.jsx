@@ -20,6 +20,7 @@ import AttachFileIcon from '@mui/icons-material/AttachFile'
 import ValidateField from '../components/ValidateField';
 import { MuiTelInput } from 'mui-tel-input'
 import { MuiFileInput } from 'mui-file-input'
+import intlTelInput from 'intl-tel-input';
 
 
 
@@ -58,11 +59,21 @@ export default function SignUp() {
   }
   const handleSubmit = (event) => {
     event.preventDefault();
+    console.log('ec', event.currentTarget)
+
     const data = new FormData(event.currentTarget); 
-    console.log('dataa: ', data)
-    // TODO: if mobile number only contains area code then dont submit the number
-    // get area code by checking first word before removing spaces. or by getting
-    // all area codes from here https://github.com/jackocnr/intl-tel-input
+    console.log('data: ', data)
+    for (const pair of data.entries()) {
+      console.log(pair[0], pair[1]);
+    }
+    // if mobile number only contains area code then dont submit the number
+    const countryData = intlTelInput.getCountryData();
+    const countryCodes = countryData.map((country) => "+"+country.dialCode)
+    if (countryCodes.includes(data.get('telNum')))
+      data.delete('telNum')
+    for (const pair of data.entries()) {
+      console.log(pair[0], pair[1]);
+    }
     // TODO: Pass better alert notification
     // TODO: hash password on frontend with a randomly generated salt. Then on backend
     // hash that password again with another randomly generated salt.
