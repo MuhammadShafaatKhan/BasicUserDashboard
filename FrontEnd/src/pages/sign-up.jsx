@@ -1,4 +1,5 @@
 // Reference: https://github.com/mui/material-ui/tree/v5.16.4/docs/data/material/getting-started/templates/sign-up
+//  todo: move same block of code in grid to a function
 import * as React from 'react';
 import { useState } from 'react';
 import Avatar from '@mui/material/Avatar';
@@ -66,6 +67,22 @@ export default function SignUp() {
   }
   const handleSubmit = (event) => {
     event.preventDefault();
+    // TODO: Pass better alert notification
+    // TODO: hash password on frontend with a randomly generated salt. Then on backend
+    // hash that password again with another randomly generated salt.
+    // TODO: once complete dashboard functioning, then check better authentication method
+    // to be implemented.
+    let allFieldsValid = true
+    for (const field in fieldsValid) {
+      if (fieldsValid[field] === false){
+        alert('Please fill the data correctly')
+        console.log('post request didnt proceed due to invalid data')
+        allFieldsValid = false
+        break;
+      }
+    }
+    if (allFieldsValid) {
+      console.log('post request proceeded')
     console.log('ec', event.currentTarget)
 
     const data = new FormData(event.currentTarget); 
@@ -102,25 +119,9 @@ export default function SignUp() {
     for (const pair of data.entries()) {
       console.log(pair[0], pair[1]);
     }
-    // TODO: Pass better alert notification
-    // TODO: hash password on frontend with a randomly generated salt. Then on backend
-    // hash that password again with another randomly generated salt.
-    // TODO: once complete dashboard functioning, then check better authentication method
-    // to be implemented.
     
-    // noValidate attribute have been removed from form, now this alert is unnecesory
-    // for (const field of requiredFields) {
-    //   if (data.get(field).length === 0){
-    //     alert('Please fill all required fields')
-    //     break;
-    // }
-    // }
-    for (const field in fieldsValid) {
-      if (fieldsValid[field] === false){
-        alert('Please fill the data correctly')
-        break;
-      }
-    }
+    
+    
     
     console.log({
       firstName: data.get('firstName'),
@@ -131,6 +132,7 @@ export default function SignUp() {
       resumeDoc: data.get('resumeDoc'),
       password: data.get('password'),
     });
+  }
   };
 
   return (
