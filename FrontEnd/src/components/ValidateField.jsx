@@ -200,6 +200,9 @@ function ValidateField({ email, phone, abn, imgSize, imgFile,docSize, docFile,  
         >Passwords matched</Typography>
       )
     }
+    else if (confirmPasswords[1].length === 0){
+      updateValidFieldsState(alreadyValid, 'confirmPassword', setValid, true)
+    }
   }
 }
 
