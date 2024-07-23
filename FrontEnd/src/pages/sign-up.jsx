@@ -18,6 +18,7 @@ import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import InputAdornment from '@mui/material/InputAdornment';
 import IconButton from '@mui/material/IconButton';
+import FormHelperText from '@mui/material/FormHelperText';
 import ValidateField from '../components/ValidateField';
 import { MuiTelInput } from 'mui-tel-input'
 import { MuiFileInput } from 'mui-file-input'
@@ -228,6 +229,7 @@ export default function SignUp() {
                     children: <CloseIcon fontSize="small" />,
                   }}
                 />
+                <FormHelperText id="img-helper-text"  sx={{"paddingLeft": "2px"}}>Max size: 1MB</FormHelperText>
                 <ValidateField imgSize={imgSize} imgFile={imgFile} setValid={setFieldsValid} alreadyValid={fieldsValid}/>
               </Grid>
               <Grid item xs={12}>
@@ -252,6 +254,7 @@ export default function SignUp() {
                     children: <CloseIcon fontSize="small" />,
                   }}
                 />
+                <FormHelperText id="doc-helper-text" sx={{"paddingLeft": "2px"}}>Max size: 1MB</FormHelperText>
                 <ValidateField docSize={docSize} docFile={docFile} setValid={setFieldsValid} alreadyValid={fieldsValid}/>
               </Grid>
               
