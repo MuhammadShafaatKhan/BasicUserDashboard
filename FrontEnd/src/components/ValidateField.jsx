@@ -1,3 +1,8 @@
+import * as React from 'react';
+import { styled } from '@mui/material/styles';
+import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
+import IconButton from '@mui/material/IconButton';
+import HelpOutlineOutlinedIcon from '@mui/icons-material/HelpOutlineOutlined';
 import validator from 'validator';
 import Typography from '@mui/material/Typography';
 import isValidABN from 'is-valid-abn'
@@ -13,8 +18,23 @@ function updateValidFieldsState(alreadyValid, fieldName, setValid, value){
     setValid(updatedValid)
 }
 }
+
+const SpecialCharsSection = styled(({ className, ...props }) => (
+  <Tooltip enterTouchDelay={700} placement="bottom" {...props} classes={{ popper: className }} />
+))(({ theme }) => ({
+  [`& .${tooltipClasses.tooltip}`]: {
+    backgroundColor: '#f5f5f9',
+    color: 'black',
+    maxWidth: 310,
+    border: '1px solid #dadde9',
+    display: 'block'
+  },
+}));
+
+
 function ValidateField({ email, phone, abn, imgSize, imgFile,docSize, docFile,  password, setValid, alreadyValid }) {
   const style = {"color": "red", "paddingLeft": "2px" }
+  const specialChars = "- # ! $ @ % ^ & * ( ) _ + | ~ = ` { } [ ] : \" ; ' < > ? , . /"
   if (typeof email !== 'undefined') {
     if (!validator.isEmail(email) && email.length !== 0) {
     updateValidFieldsState(alreadyValid, 'email', setValid, false)
@@ -109,8 +129,33 @@ function ValidateField({ email, phone, abn, imgSize, imgFile,docSize, docFile,  
               ...( /[-#!$@£%^&*()_+|~=`{}\[\]:";'<>?,.\/\\ ]/.test(password) && {color:"green"})
               }} 
             >
-              minimum 1 Symbol
-            </Typography>
+              minimum 1 Symbol    
+            <SpecialCharsSection
+            sx = {{display: 'inline'}}
+              title={
+                <React.Fragment>
+                  <Typography variant='body2' color="inherit">Symbol includes following (including a space): <br/> {specialChars} </Typography>
+                </React.Fragment>
+              }
+            >
+              <IconButton 
+                sx={{
+                  color: "red", 
+                  display: 'inline',
+                  paddingLeft:1,
+                  paddingBottom:0,
+                  paddingTop:0,
+                  ...( /[-#!$@£%^&*()_+|~=`{}\[\]:";'<>?,.\/\\ ]/.test(password) && {color:"green"})
+                }} 
+                aria-label="info button"
+              >
+                <HelpOutlineOutlinedIcon 
+                  fontSize='small'
+                  sx = {{display: 'inline'}}
+                />
+              </IconButton>
+              </SpecialCharsSection>
+              </Typography>
           </Typography>
         </>
       )
