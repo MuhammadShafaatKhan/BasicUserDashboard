@@ -32,7 +32,7 @@ const SpecialCharsSection = styled(({ className, ...props }) => (
 }));
 
 
-function ValidateField({ email, phone, abn, imgSize, imgFile,docSize, docFile,  password, setValid, alreadyValid }) {
+function ValidateField({ email, phone, abn, imgSize, imgFile,docSize, docFile,  password, confirmPasswords, setValid, alreadyValid }) {
   const style = {"color": "red", "paddingLeft": "2px" }
   const specialChars = "- # ! $ @ % ^ & * ( ) _ + | ~ = ` { } [ ] : \" ; ' < > ? , . /"
   if (typeof email !== 'undefined') {
@@ -140,12 +140,12 @@ function ValidateField({ email, phone, abn, imgSize, imgFile,docSize, docFile,  
             >
               <IconButton 
                 sx={{
-                  color: "red", 
+                  color: "black", 
                   display: 'inline',
                   paddingLeft:1,
                   paddingBottom:0,
                   paddingTop:0,
-                  ...( /[-#!$@£%^&*()_+|~=`{}\[\]:";'<>?,.\/\\ ]/.test(password) && {color:"green"})
+                  ...( /[-#!$@£%^&*()_+|~=`{}\[\]:";'<>?,.\/\\ ]/.test(password) && {color:"black"})
                 }} 
                 aria-label="info button"
               >
@@ -181,6 +181,25 @@ function ValidateField({ email, phone, abn, imgSize, imgFile,docSize, docFile,  
       )
     }
     updateValidFieldsState(alreadyValid, 'resumeDoc', setValid, true)
+  } else if (typeof confirmPasswords !== 'undefined'){
+    if (confirmPasswords[0] !== confirmPasswords[1] && confirmPasswords[1].length > 0){
+      updateValidFieldsState(alreadyValid, 'confirmPassword', setValid, false)
+      return(
+        <Typography sx={style} variant="body2">Passwords didn't matched</Typography>
+      )
+    }
+    else if (confirmPasswords[1].length > 0) {
+      updateValidFieldsState(alreadyValid, 'confirmPassword', setValid, true)
+      return(
+        <Typography 
+          sx={{ 
+            color: "green", 
+            paddingLeft: "2px", 
+            }}  
+          variant="body2"
+        >Passwords matched</Typography>
+      )
+    }
   }
 }
 

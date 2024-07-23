@@ -36,6 +36,7 @@ export default function SignUp() {
   const [telNum, setTelNum] = useState('')
   const [abn, setAbn] = useState('')
   const [password, setPassword] = useState('')
+  const [confirmPassword, setConfirmPassword] = useState('')
   // TODO: check this fields validity dynamicly instead of hardcoded
   const [
     fieldsValid, 
@@ -46,16 +47,17 @@ export default function SignUp() {
                 password:true, 
                 profileImg:true,
                 resumeDoc:true,
-                abn: true
+                abn: true,
+                confirmPassword: true
               })
   const [imgFile, setImgFile] = useState(null)
   const [imgSize, setImgSize] = useState(0)
   const [docFile, setDocFile] = useState(null)
   const [docSize, setDocSize] = useState(0)
   const [showPassword, setShowPassword] = useState(false)
-
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false)
   const handleClickShowPassword = () => setShowPassword((show) => !show)
-
+  const handleClickShowConfirmPassword = () => setShowConfirmPassword((show) => !show)
   const handleDocFileChange = (newFile) => {
     setDocFile(newFile)
   }
@@ -284,7 +286,32 @@ export default function SignUp() {
                 />
                 <ValidateField password={password} setValid={setFieldsValid} alreadyValid={fieldsValid}/>
               </Grid>
-              
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
+                  name="confirm-password"
+                  label="Confirm Password"
+                  type={showConfirmPassword ? 'text' : 'password'}
+                  id="confirm-password"
+                  autoComplete="off"
+                  value={confirmPassword}
+                  InputProps={{
+                    endAdornment:
+                      <InputAdornment position="end">
+                        <IconButton
+                          aria-label="toggle confirm password visibility"
+                          onClick={handleClickShowConfirmPassword}
+                          edge="end"
+                        >
+                          {showConfirmPassword ? <VisibilityOff /> : <Visibility />}
+                        </IconButton>
+                      </InputAdornment>
+                  }}
+                  onChange={(event) =>{event.preventDefault(); setConfirmPassword(event.target.value)}}
+                />
+                <ValidateField confirmPasswords={[password, confirmPassword]} setValid={setFieldsValid} alreadyValid={fieldsValid}/>
+              </Grid>
             </Grid>
             <Button
               type="submit"
