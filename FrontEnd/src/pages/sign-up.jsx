@@ -14,6 +14,10 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import CloseIcon from '@mui/icons-material/Close'
 import AttachFileIcon from '@mui/icons-material/AttachFile'
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import InputAdornment from '@mui/material/InputAdornment';
+import IconButton from '@mui/material/IconButton';
 import ValidateField from '../components/ValidateField';
 import { MuiTelInput } from 'mui-tel-input'
 import { MuiFileInput } from 'mui-file-input'
@@ -47,6 +51,9 @@ export default function SignUp() {
   const [imgSize, setImgSize] = useState(0)
   const [docFile, setDocFile] = useState(null)
   const [docSize, setDocSize] = useState(0)
+  const [showPassword, setShowPassword] = useState(false)
+
+  const handleClickShowPassword = () => setShowPassword((show) => !show)
 
   const handleDocFileChange = (newFile) => {
     setDocFile(newFile)
@@ -254,10 +261,22 @@ export default function SignUp() {
                   fullWidth
                   name="password"
                   label="Password"
-                  type="password"
+                  type={showPassword ? 'text' : 'password'}
                   id="password"
                   autoComplete="off"
                   value={password}
+                  InputProps={{
+                    endAdornment:
+                      <InputAdornment position="end">
+                        <IconButton
+                          aria-label="toggle password visibility"
+                          onClick={handleClickShowPassword}
+                          edge="end"
+                        >
+                          {showPassword ? <VisibilityOff /> : <Visibility />}
+                        </IconButton>
+                      </InputAdornment>
+                  }}
                   onChange={(event) =>{event.preventDefault(); setPassword(event.target.value)}}
                 />
                 <ValidateField password={password} setValid={setFieldsValid} alreadyValid={fieldsValid}/>
