@@ -179,6 +179,7 @@ export default function SignUp() {
               <Grid item xs={12}>
                 <TextField
                   required
+                  error={fieldsValid['email'] ? false : true}
                   fullWidth
                   id="email"
                   label="Email Address"
@@ -191,6 +192,7 @@ export default function SignUp() {
               <Grid item xs={12}>
                 <MuiTelInput 
                   fullWidth 
+                  error={fieldsValid['phone'] ? false : true}
                   autoComplete="tel"
                   id='telNum' 
                   label='Telephone number (Optional)' 
@@ -204,6 +206,7 @@ export default function SignUp() {
               <Grid item xs={12}>
               <TextField
                   fullWidth
+                  error={fieldsValid['abn'] ? false : true}
                   id="abn"
                   label="ABN number (Optional)"
                   name="abn"
@@ -215,10 +218,12 @@ export default function SignUp() {
                 <MuiFileInput 
                   value={imgFile} 
                   fullWidth
+                  error={fieldsValid['profileImg'] ? false : true}
                   label="Profile Picture (Optional)"
                   id="profileImg"
                   name="profileImg"
                   placeholder="Upload Profile Picture (Optional)"
+                  helperText="Max size: 1MB"
                   InputProps={{inputProps: { accept: 'image/*' }, startAdornment: <AttachFileIcon />}}
                   getSizeText={(value) =>{
                     let img = value;
@@ -233,17 +238,19 @@ export default function SignUp() {
                     children: <CloseIcon fontSize="small" />,
                   }}
                 />
-                <FormHelperText id="img-helper-text"  sx={{"paddingLeft": "2px"}}>Max size: 1MB</FormHelperText>
+                
                 <ValidateField imgSize={imgSize} imgFile={imgFile} setValid={setFieldsValid} alreadyValid={fieldsValid}/>
               </Grid>
               <Grid item xs={12}>
                 <MuiFileInput 
                   value={docFile} 
                   fullWidth
+                  error={fieldsValid['resumeDoc'] ? false : true}
                   label="Resume (Optional)"
                   id="resumeDoc"
                   name="resumeDoc"
                   placeholder="Upload Resume (Optional)"
+                  helperText="Max size: 1MB"
                   InputProps={{inputProps: { accept: '.doc, .docx, .pdf' }, startAdornment: <AttachFileIcon />}}
                   getSizeText={(value) =>{
                     let doc = value;
@@ -258,7 +265,6 @@ export default function SignUp() {
                     children: <CloseIcon fontSize="small" />,
                   }}
                 />
-                <FormHelperText id="doc-helper-text" sx={{"paddingLeft": "2px"}}>Max size: 1MB</FormHelperText>
                 <ValidateField docSize={docSize} docFile={docFile} setValid={setFieldsValid} alreadyValid={fieldsValid}/>
               </Grid>
               
@@ -266,6 +272,7 @@ export default function SignUp() {
                 <TextField
                   required
                   fullWidth
+                  error={fieldsValid['password'] ? false : true}
                   name="password"
                   label="Password"
                   type={showPassword ? 'text' : 'password'}
@@ -292,6 +299,7 @@ export default function SignUp() {
                 <TextField
                   required
                   fullWidth
+                  error={fieldsValid['confirmPassword'] ? false : true}
                   name="confirm-password"
                   label="Confirm Password"
                   type={showConfirmPassword ? 'text' : 'password'}
