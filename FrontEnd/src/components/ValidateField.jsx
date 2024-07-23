@@ -122,7 +122,7 @@ function ValidateField({ email, phone, abn, imgSize, imgFile,docSize, docFile,  
     if (imgSize > 1048576 && imgFile !== null){
       updateValidFieldsState(alreadyValid, 'profileImg', setValid, false)
       return (
-        <Typography sx={style} variant="body2">Image size should be smaller than 1MB</Typography>
+        <Typography sx={style} variant="body2">Image size should not be grater than 1MB</Typography>
       )
     }
     updateValidFieldsState(alreadyValid, 'profileImg', setValid, true)
@@ -132,7 +132,7 @@ function ValidateField({ email, phone, abn, imgSize, imgFile,docSize, docFile,  
     if (docSize > 1048576 && docFile !== null){
       updateValidFieldsState(alreadyValid, 'resumeDoc', setValid, false)
       return (
-        <Typography sx={style} variant="body2">Document size should be smaller than 1MB</Typography>
+        <Typography sx={style} variant="body2">Document size should not be greater than 1MB</Typography>
       )
     }
     updateValidFieldsState(alreadyValid, 'resumeDoc', setValid, true)
