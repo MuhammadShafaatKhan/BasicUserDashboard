@@ -25,7 +25,7 @@ import { MuiTelInput } from 'mui-tel-input'
 import { MuiFileInput } from 'mui-file-input'
 import intlTelInput from 'intl-tel-input';
 import removeChars from '../helper-functions/removeChars.js'
-
+import axios from 'axios';
 
 // TODO remove, this demo shouldn't need to reset the theme.
 
@@ -65,7 +65,7 @@ export default function SignUp() {
   const handleImgFileChange = (newFile) => {
     setImgFile(newFile)
   }
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     // TODO: Pass better alert notification
     // TODO: hash password on frontend with a randomly generated salt. Then on backend
@@ -86,6 +86,7 @@ export default function SignUp() {
     console.log('ec', event.currentTarget)
 
     const data = new FormData(event.currentTarget); 
+    console.log('ec2', event.currentTarget)
     console.log('data: ', data)
     for (const pair of data.entries()) {
       console.log(pair[0], pair[1]);
@@ -119,7 +120,72 @@ export default function SignUp() {
     for (const pair of data.entries()) {
       console.log(pair[0], pair[1]);
     }
+    console.log('ec2', event.currentTarget)
+    // TODO: check role should be given as authenticated by default once user signup.
+        axios.post("http://localhost:1337/api/auth/local/register",
+       {
+        "username": data.get('email'),
+        "email": data.get('email'),
+        "password": data.get('password'),
+        "firstName": data.get('firstName'),
+        "lastName": data.get('lastName'),
+        "phoneNumber": data.get('telNum'),
+        "AbnNumber": data.get('abn')
+       }, {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }).then(function (response) {
+      console.log(response)
+      const data3 = new FormData(); 
+    if (data.get('profileImg') !== null){
+    data3.append('files',  data.get('profileImg'))
+    data3.append('ref', 'plugin::users-permissions.user')
+    data3.append('refId', response.data.user.id)
+    data3.append('field', 'profilePic')
+    for (const value of data3.values()) {
+      console.log(value);
+    }
+    for (const key of data3.keys()) {
+      console.log(key);
+    }
     
+    fetch('http://localhost:1337/api/upload', {
+      method: 'post',
+      headers: { Authorization: `BEARER ${response.data.jwt}` },
+      body: data3
+    })
+    .then(res => {
+      console.log('res: ', res);
+    })
+    .catch(err => {
+      console.log('err: ', err);
+    });
+  }
+  if (data.get('resumeDoc') !== null){
+    console.log('data.get(resumeDoc)::', data.get('resumeDoc'))
+    data3.set('ref', 'plugin::users-permissions.user')
+    data3.set('refId',  response.data.user.id)
+    data3.set('field', 'resume')
+    data3.set('files', data.get('resumeDoc'))
+     fetch('http://localhost:1337/api/upload', {
+      method: 'post',
+      headers: { Authorization: `BEARER ${response.data.jwt}` },
+      body: data3
+    })
+    .then(res => {
+      console.log('res: ', res);
+    })
+    .catch(err => {
+      console.log('err: ', err);
+    });
+    //console.log('data4: ', data4)
+  }
+
+    })
+    .catch(function (error) {
+      console.log('e', error);
+    });
     
     
     
