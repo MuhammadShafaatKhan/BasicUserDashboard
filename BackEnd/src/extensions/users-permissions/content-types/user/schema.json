@@ -50,7 +50,7 @@
     },
     "confirmed": {
       "type": "boolean",
-      "default": false,
+      "default": true,
       "configurable": false
     },
     "blocked": {
@@ -81,18 +81,20 @@
       "type": "string"
     },
     "profilePic": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
       "allowedTypes": [
         "images"
-      ],
-      "type": "media",
-      "multiple": false
+      ]
     },
     "resume": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
       "allowedTypes": [
         "files"
-      ],
-      "type": "media",
-      "multiple": false
+      ]
     }
   }
 }
