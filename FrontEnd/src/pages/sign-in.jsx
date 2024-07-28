@@ -1,5 +1,6 @@
 // Reference: https://github.com/mui/material-ui/tree/v5.16.4/docs/data/material/getting-started/templates/sign-in
 import * as React from 'react';
+import { useState } from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -13,6 +14,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import ValidateField from '../components/ValidateField';
 
 
 // TODO remove, this demo shouldn't need to reset the theme.
@@ -20,13 +22,26 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 const defaultTheme = createTheme();
 
 export default function SignIn() {
+  const [email, setEmail] = useState('')
+  const [
+    emailValid, 
+    setEmailValid
+  ] = useState({ 
+                email:true 
+              })
   const handleSubmit = (event) => {
     event.preventDefault();
+    if (emailValid['email'] === false){
+      alert('Please fill the email correctly')
+      console.log('post request didnt proceed due to invalid data')
+    }
+    else {
     const data = new FormData(event.currentTarget);
     console.log({
       email: data.get('email'),
       password: data.get('password'),
     });
+  }
   };
 
   return (
@@ -51,13 +66,16 @@ export default function SignIn() {
             <TextField
               margin="normal"
               required
+              error={emailValid['email'] ? false : true}
               fullWidth
               id="email"
               label="Email Address"
               name="email"
               autoComplete="email"
+              onChange={(event) =>{event.preventDefault(); setEmail(event.target.value)}}
               autoFocus
             />
+            <ValidateField email={email} setValid={setEmailValid} alreadyValid={emailValid}/>
             <TextField
               margin="normal"
               required
