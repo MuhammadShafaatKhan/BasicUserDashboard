@@ -44,6 +44,36 @@ export default function SignIn() {
     }
     else {
     const data = new FormData(event.currentTarget);
+    const authData = {
+      identifier: data.get('email'),
+      password: data.get('password')
+    }
+     fetch(`http://localhost:1337/api/auth/local`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(authData),
+    })
+    .then(res => {
+      res.json().then(res2 => {
+        console.log(res2)
+        if (res2.jwt === undefined){
+          alert('email or password is incorrect')
+        }
+        else {
+          //navigate to dashboard page
+          console.log('navigate to dashboard')
+        }
+      }
+      )
+    })
+    .catch(err => {
+      console.log('err: ', err);
+    });
+
+    
+
     console.log({
       email: data.get('email'),
       password: data.get('password'),
