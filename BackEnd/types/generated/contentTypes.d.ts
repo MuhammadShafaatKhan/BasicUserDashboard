@@ -773,7 +773,11 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
     firstName: Attribute.String & Attribute.Required;
     lastName: Attribute.String & Attribute.Required;
     phoneNumber: Attribute.String & Attribute.Unique;
-    AbnNumber: Attribute.String;
+    AbnNumber: Attribute.String &
+      Attribute.SetMinMaxLength<{
+        minLength: 11;
+        maxLength: 11;
+      }>;
     profilePic: Attribute.Media<'images'>;
     resume: Attribute.Media<'files'>;
     createdAt: Attribute.DateTime;

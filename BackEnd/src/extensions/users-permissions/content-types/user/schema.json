@@ -78,7 +78,9 @@
       "unique": true
     },
     "AbnNumber": {
-      "type": "string"
+      "type": "string",
+      "maxLength": 11,
+      "minLength": 11
     },
     "profilePic": {
       "type": "media",
