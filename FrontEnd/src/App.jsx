@@ -1,5 +1,3 @@
-// TODO: for backend use strapi
-// first follow this tute https://strapi.io/blog/strapi-authentication-with-react
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import './App.css'
 import SignUp from './pages/sign-up'

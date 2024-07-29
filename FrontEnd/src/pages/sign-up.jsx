@@ -67,10 +67,6 @@ export default function SignUp() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     // TODO: Pass better alert notification
-    // TODO: hash password on frontend with a randomly generated salt. Then on backend
-    // hash that password again with another randomly generated salt.
-    // TODO: once complete dashboard functioning, then check better authentication method
-    // to be implemented.
     let allFieldsValid = true
     for (const field in fieldsValid) {
       if (fieldsValid[field] === false){
