@@ -15,10 +15,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import ValidateField from '../components/ValidateField';
-import Visibility from '@mui/icons-material/Visibility';
-import VisibilityOff from '@mui/icons-material/VisibilityOff';
-import InputAdornment from '@mui/material/InputAdornment';
-import IconButton from '@mui/material/IconButton';
+import TogglePasswordVisibility from '../components/TogglePasswordVisibility'
 
 
 // TODO remove, this demo shouldn't need to reset the theme.
@@ -35,7 +32,6 @@ export default function SignIn() {
               })
   // TODO: move password visibility functionality to seperate component
   const [showPassword, setShowPassword] = useState(false)
-  const handleClickShowPassword = () => setShowPassword((show) => !show)
   const handleSubmit = (event) => {
     event.preventDefault();
     if (emailValid['email'] === false){
@@ -123,16 +119,11 @@ export default function SignIn() {
               id="password"
               autoComplete="current-password"
               InputProps={{
-                endAdornment:
-                  <InputAdornment position="end">
-                    <IconButton
-                      aria-label="toggle password visibility"
-                      onClick={handleClickShowPassword}
-                      edge="end"
-                    >
-                      {showPassword ? <VisibilityOff /> : <Visibility />}
-                    </IconButton>
-                  </InputAdornment>
+                endAdornment: 
+                  <TogglePasswordVisibility 
+                    setShowPassword={setShowPassword}
+                    showPassword={showPassword}
+                  />
               }}
             />
             <FormControlLabel

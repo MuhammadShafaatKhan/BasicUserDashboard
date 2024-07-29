@@ -15,10 +15,7 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import CloseIcon from '@mui/icons-material/Close'
 import AttachFileIcon from '@mui/icons-material/AttachFile'
-import Visibility from '@mui/icons-material/Visibility';
-import VisibilityOff from '@mui/icons-material/VisibilityOff';
-import InputAdornment from '@mui/material/InputAdornment';
-import IconButton from '@mui/material/IconButton';
+import TogglePasswordVisibility from '../components/TogglePasswordVisibility'
 import ValidateField from '../components/ValidateField';
 import { MuiTelInput } from 'mui-tel-input'
 import { MuiFileInput } from 'mui-file-input'
@@ -56,8 +53,6 @@ export default function SignUp() {
   const [docSize, setDocSize] = useState(0)
   const [showPassword, setShowPassword] = useState(false)
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
-  const handleClickShowPassword = () => setShowPassword((show) => !show)
-  const handleClickShowConfirmPassword = () => setShowConfirmPassword((show) => !show)
   const handleDocFileChange = (newFile) => {
     setDocFile(newFile)
   }
@@ -341,16 +336,11 @@ export default function SignUp() {
                   autoComplete="off"
                   value={password}
                   InputProps={{
-                    endAdornment:
-                      <InputAdornment position="end">
-                        <IconButton
-                          aria-label="toggle password visibility"
-                          onClick={handleClickShowPassword}
-                          edge="end"
-                        >
-                          {showPassword ? <VisibilityOff /> : <Visibility />}
-                        </IconButton>
-                      </InputAdornment>
+                    endAdornment: 
+                      <TogglePasswordVisibility 
+                        setShowPassword={setShowPassword}
+                        showPassword={showPassword}
+                      />
                   }}
                   onChange={(event) =>{event.preventDefault(); setPassword(event.target.value)}}
                 />
@@ -368,16 +358,11 @@ export default function SignUp() {
                   autoComplete="off"
                   value={confirmPassword}
                   InputProps={{
-                    endAdornment:
-                      <InputAdornment position="end">
-                        <IconButton
-                          aria-label="toggle confirm password visibility"
-                          onClick={handleClickShowConfirmPassword}
-                          edge="end"
-                        >
-                          {showConfirmPassword ? <VisibilityOff /> : <Visibility />}
-                        </IconButton>
-                      </InputAdornment>
+                    endAdornment: 
+                      <TogglePasswordVisibility 
+                        setShowPassword={setShowConfirmPassword}
+                        showPassword={showConfirmPassword}
+                      />
                   }}
                   onChange={(event) =>{event.preventDefault(); setConfirmPassword(event.target.value)}}
                 />
