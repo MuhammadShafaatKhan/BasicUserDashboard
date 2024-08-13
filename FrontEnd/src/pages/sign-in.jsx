@@ -16,7 +16,11 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import ValidateField from '../components/ValidateField';
 import TogglePasswordVisibility from '../components/TogglePasswordVisibility'
-
+import { API } from "../constants.js";
+import { setToken, getToken } from "../helper-functions/authToken.js";
+import { useNavigate } from "react-router-dom";
+import Alert from '@mui/material/Alert';
+import AlertTitle from '@mui/material/AlertTitle';
 
 // TODO remove, this demo shouldn't need to reset the theme.
 
@@ -24,56 +28,66 @@ const defaultTheme = createTheme();
 
 export default function SignIn() {
   const [email, setEmail] = useState('')
+  //const [showAlert, setShowAlert] = useState(false);
+  const navigate = useNavigate();
   const [
     emailValid, 
     setEmailValid
   ] = useState({ 
                 email:true 
               })
-  // TODO: move password visibility functionality to seperate component
   const [showPassword, setShowPassword] = useState(false)
-  const handleSubmit = (event) => {
+  const [isLoading, setIsLoading] = useState(false);
+  const handleSubmit = async (event) => {
     event.preventDefault();
     if (emailValid['email'] === false){
       alert('Please fill the email correctly')
       console.log('post request didnt proceed due to invalid data')
     }
     else {
+      setIsLoading(true);
+      try {
     const data = new FormData(event.currentTarget);
     const authData = {
       identifier: data.get('email'),
       password: data.get('password')
     }
-     fetch(`http://localhost:1337/api/auth/local`, {
+    console.log(authData)
+     const response = await fetch(`${API}/auth/local`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(authData),
     })
-    .then(res => {
-      res.json().then(res2 => {
-        console.log(res2)
-        if (res2.jwt === undefined){
+    console.log(response)
+     const  resData = await response.json()
+      console.log(resData)
+        if (resData.jwt === undefined){
           alert('email or password is incorrect')
         }
         else {
           //navigate to dashboard page
+          setToken(resData.jwt)
+          console.log(getToken())
           console.log('navigate to dashboard')
+          navigate("/dashboard", { replace: true });
+          //setShowAlert(true)
+          console.log(getToken())
         }
-      }
-      )
-    })
-    .catch(err => {
-      console.log('err: ', err);
-    });
-
+      
     
 
     console.log({
       email: data.get('email'),
       password: data.get('password'),
     });
+  } catch (error) {
+    console.error(error);
+  } 
+  finally {
+    setIsLoading(false);
+  }
   }
   };
 
@@ -89,6 +103,21 @@ export default function SignIn() {
             alignItems: 'center',
           }}
         >
+          {
+            // FIXME: As currently signup and signin not navigting to dashboard automatically
+            // by it self sometimes. So showing alert that if it didnt got navigated then
+            // show this alert message.
+            // TODO: show username in welcome message
+            getToken() ?
+            (
+            <Alert 
+              severity="success"
+            >
+              <AlertTitle>Welcome UserName!</AlertTitle>
+              Please refresh the page to go to dashboard.
+            </Alert> 
+            ) : null
+          }
           <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
             <LockOutlinedIcon />
           </Avatar>
@@ -136,7 +165,10 @@ export default function SignIn() {
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
-              Sign In
+              {
+                //TODO: Add loading spin component here
+              }
+              Sign In {isLoading && "Loading......" }
             </Button>
             <Grid container>
               {

@@ -22,6 +22,9 @@ import { MuiFileInput } from 'mui-file-input'
 import intlTelInput from 'intl-tel-input';
 import removeChars from '../helper-functions/removeChars.js'
 import axios from 'axios';
+import { API } from "../constants.js";
+import { setToken} from "../helper-functions/authToken.js"
+import { useNavigate } from "react-router-dom";
 
 // TODO remove, this demo shouldn't need to reset the theme.
 
@@ -53,19 +56,24 @@ export default function SignUp() {
   const [docSize, setDocSize] = useState(0)
   const [showPassword, setShowPassword] = useState(false)
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
+  const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
   const handleDocFileChange = (newFile) => {
     setDocFile(newFile)
   }
   const handleImgFileChange = (newFile) => {
     setImgFile(newFile)
   }
+  // TODO: Make consistent naming to have both fileAttribute, fieldAttribute as same name.
+  // Means change profileImg to profilePic (profilePic is strapi attribute name) and
+  //resumeDoc to resume (resume is strapi attribute name)
   function postMediaData(data, response, fileAttribute, fieldAttribute){
     const mediaData = new FormData(); 
     mediaData.append('files',  data.get(fileAttribute))
     mediaData.append('ref', 'plugin::users-permissions.user')
     mediaData.append('refId', response.data.user.id)
     mediaData.append('field', fieldAttribute)
-    fetch('http://localhost:1337/api/upload', {
+    fetch(`${API}/upload`, {
       method: 'post',
       headers: { Authorization: `BEARER ${response.data.jwt}` },
       body: mediaData
@@ -130,8 +138,10 @@ export default function SignUp() {
       console.log(pair[0], pair[1]);
     }
     console.log('ec2', event.currentTarget)
+    setIsLoading(true);
+    try {
     // TODO: check role should be given as authenticated by default once user signup.
-        axios.post("http://localhost:1337/api/auth/local/register",
+        axios.post(`${API}/auth/local/register`,
        {
         "username": data.get('email'),
         "email": data.get('email'),
@@ -146,29 +156,26 @@ export default function SignUp() {
       }
     }).then(function (response) {
       console.log(response)
+      setToken(response.data.jwt)
     if (data.get('profileImg') !== null){
       postMediaData(data, response, 'profileImg', 'profilePic')
     }
     if (data.get('resumeDoc') !== null){
       postMediaData(data, response, 'resumeDoc', 'resume')
     }
+    console.log('here')
 
+    navigate("/dashboard", { replace: true });
     })
     .catch(function (error) {
       console.log('e', error);
     });
     
-    
-    
-    console.log({
-      firstName: data.get('firstName'),
-      lastName: data.get('lastName'),
-      email: data.get('email'),
-      telNum: data.get('telNum'),
-      profileImg: data.get('profileImg'),
-      resumeDoc: data.get('resumeDoc'),
-      password: data.get('password'),
-    });
+  } catch (error) {
+    console.error(error);
+  } finally {
+    setIsLoading(false);
+  }
   }
   };
 
@@ -356,7 +363,10 @@ export default function SignUp() {
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
-              Sign Up
+              {
+                //TODO: Add loading spin component here
+              }
+              Sign Up {isLoading && "Loading...."}
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>
