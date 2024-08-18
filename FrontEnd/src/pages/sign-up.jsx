@@ -25,6 +25,7 @@ import axios from 'axios';
 import { API } from "../constants.js";
 import { setToken} from "../helper-functions/authToken.js"
 import { useNavigate } from "react-router-dom";
+import CircularProgress from '@mui/material/CircularProgress';
 
 // TODO remove, this demo shouldn't need to reset the theme.
 
@@ -363,10 +364,7 @@ export default function SignUp() {
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
-              {
-                //TODO: Add loading spin component here
-              }
-              Sign Up {isLoading && "Loading...."}
+             {isLoading? <CircularProgress color="inherit" /> : "Sign Up"}
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>

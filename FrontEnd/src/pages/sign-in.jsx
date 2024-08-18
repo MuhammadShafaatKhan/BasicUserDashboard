@@ -21,6 +21,7 @@ import { setToken, getToken } from "../helper-functions/authToken.js";
 import { useNavigate } from "react-router-dom";
 import Alert from '@mui/material/Alert';
 import AlertTitle from '@mui/material/AlertTitle';
+import CircularProgress from '@mui/material/CircularProgress';
 
 // TODO remove, this demo shouldn't need to reset the theme.
 
@@ -165,10 +166,7 @@ export default function SignIn() {
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
-              {
-                //TODO: Add loading spin component here
-              }
-              Sign In {isLoading && "Loading......" }
+              {isLoading? <CircularProgress color="inherit" /> : "Sign In"}
             </Button>
             <Grid container>
               {
