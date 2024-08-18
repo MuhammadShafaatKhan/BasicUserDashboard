@@ -68,13 +68,13 @@ export default function SignUp() {
   // TODO: Make consistent naming to have both fileAttribute, fieldAttribute as same name.
   // Means change profileImg to profilePic (profilePic is strapi attribute name) and
   //resumeDoc to resume (resume is strapi attribute name)
-  function postMediaData(data, response, fileAttribute, fieldAttribute){
+  async function postMediaData(data, response, fileAttribute, fieldAttribute){
     const mediaData = new FormData(); 
     mediaData.append('files',  data.get(fileAttribute))
     mediaData.append('ref', 'plugin::users-permissions.user')
     mediaData.append('refId', response.data.user.id)
     mediaData.append('field', fieldAttribute)
-    fetch(`${API}/upload`, {
+    await fetch(`${API}/upload`, {
       method: 'post',
       headers: { Authorization: `BEARER ${response.data.jwt}` },
       body: mediaData
@@ -141,8 +141,7 @@ export default function SignUp() {
     console.log('ec2', event.currentTarget)
     setIsLoading(true);
     try {
-    // TODO: check role should be given as authenticated by default once user signup.
-        axios.post(`${API}/auth/local/register`,
+       await axios.post(`${API}/auth/local/register`,
        {
         "username": data.get('email'),
         "email": data.get('email'),
@@ -155,14 +154,14 @@ export default function SignUp() {
       headers: {
         'Content-Type': 'application/json'
       }
-    }).then(function (response) {
+    }).then(async function (response) {
       console.log(response)
       setToken(response.data.jwt)
     if (data.get('profileImg') !== null){
-      postMediaData(data, response, 'profileImg', 'profilePic')
+      await postMediaData(data, response, 'profileImg', 'profilePic')
     }
     if (data.get('resumeDoc') !== null){
-      postMediaData(data, response, 'resumeDoc', 'resume')
+      await postMediaData(data, response, 'resumeDoc', 'resume')
     }
     console.log('here')
 
