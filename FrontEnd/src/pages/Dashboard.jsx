@@ -29,7 +29,7 @@ function Dashboard() {
     setLoading(true);
     async function fetchData() {
       try {
-        const response = await fetch(`${API}/users/me`, {
+        const response = await fetch(`${API}/users/me?populate=*`, {
           headers: { Authorization: `BEARER ${getToken()}` },
         })
         let user = await response.json()
