@@ -16,7 +16,7 @@ import DashboardIcon from '@mui/icons-material/Dashboard';
 import { API } from "../constants.js";
 import { getToken } from "../helper-functions/authToken.js";
 
-const pages = ['Products', 'Pricing', 'Blog'];
+const pages = ['All Projects', 'My Projects'];
 const settings = ['Profile', 'Account', 'Logout'];
 
 function Dashboard() {
