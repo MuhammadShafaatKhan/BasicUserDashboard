@@ -25,7 +25,10 @@ function Dashboard() {
   const [anchorElUser, setAnchorElUser] = useState(null);
   const [loading, setLoading] = useState(false);
   const [user, setUser] = useState(null);
-
+  if (!getToken()){
+    window.location.reload()
+  }
+  else {
   useEffect(() => {
     setLoading(true);
     async function fetchData() {
@@ -43,7 +46,7 @@ function Dashboard() {
     }
     fetchData();
   }, []); 
-
+}
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };

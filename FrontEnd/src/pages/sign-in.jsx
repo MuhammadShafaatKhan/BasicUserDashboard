@@ -19,8 +19,6 @@ import TogglePasswordVisibility from '../components/TogglePasswordVisibility'
 import { API } from "../constants.js";
 import { setToken, getToken } from "../helper-functions/authToken.js";
 import { useNavigate } from "react-router-dom";
-import Alert from '@mui/material/Alert';
-import AlertTitle from '@mui/material/AlertTitle';
 import CircularProgress from '@mui/material/CircularProgress';
 
 // TODO remove, this demo shouldn't need to reset the theme.
@@ -28,6 +26,9 @@ import CircularProgress from '@mui/material/CircularProgress';
 const defaultTheme = createTheme();
 
 export default function SignIn() {
+  if (getToken()){
+    window.location.reload()
+  }
   const [email, setEmail] = useState('')
   //const [showAlert, setShowAlert] = useState(false);
   const navigate = useNavigate();
@@ -104,21 +105,6 @@ export default function SignIn() {
             alignItems: 'center',
           }}
         >
-          {
-            // FIXME: As currently signup and signin not navigting to dashboard automatically
-            // by it self sometimes. So showing alert that if it didnt got navigated then
-            // show this alert message.
-            // TODO: show username in welcome message
-            getToken() ?
-            (
-            <Alert 
-              severity="success"
-            >
-              <AlertTitle>Welcome UserName!</AlertTitle>
-              Please refresh the page to go to dashboard.
-            </Alert> 
-            ) : null
-          }
           <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
             <LockOutlinedIcon />
           </Avatar>
