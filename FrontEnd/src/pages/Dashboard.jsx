@@ -14,8 +14,9 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import { API } from "../constants.js";
-import { getToken } from "../helper-functions/authToken.js";
+import { getToken, removeToken } from "../helper-functions/authToken.js";
 import LinearProgress from '@mui/material/LinearProgress';
+import { useNavigate } from "react-router-dom";
 
 const pages = ['All Projects', 'My Projects'];
 const settings = ['Profile', 'Account', 'Logout'];
@@ -25,6 +26,7 @@ function Dashboard() {
   const [anchorElUser, setAnchorElUser] = useState(null);
   const [loading, setLoading] = useState(false);
   const [user, setUser] = useState(null);
+  const navigate = useNavigate();
   if (!getToken()){
     window.location.reload()
   }
@@ -60,6 +62,12 @@ function Dashboard() {
 
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
+  };
+
+  const handleLogout = () => {
+    setAnchorElUser(null);
+    removeToken();
+    navigate("/sign-in", { replace: true });
   };
   if (loading) {
     return (
@@ -181,11 +189,23 @@ function Dashboard() {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
+              {settings.map((setting) =>{
+                //console.log('s: ', setting)
+                if (setting === 'Logout'){
+                  return (
+                <MenuItem key={setting} onClick={handleLogout}>   
                   <Typography textAlign="center">{setting}</Typography>
                 </MenuItem>
-              ))}
+                  )
+                }
+                else {
+                return (
+                <MenuItem key={setting} onClick={handleCloseUserMenu}>   
+                  <Typography textAlign="center">{setting}</Typography>
+                </MenuItem>
+              )
+            }
+              })}
             </Menu>
           </Box>
         </Toolbar>
