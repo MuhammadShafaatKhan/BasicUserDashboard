@@ -165,7 +165,7 @@ export default function SignUp() {
     }
     console.log('here')
 
-    navigate("/dashboard", { replace: true });
+    navigate("/all-projects", { replace: true });
     })
     .catch(function (error) {
       console.log('e', error);

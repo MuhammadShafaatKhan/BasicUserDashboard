@@ -16,10 +16,10 @@ import DashboardIcon from '@mui/icons-material/Dashboard';
 import { API } from "../constants.js";
 import { getToken, removeToken } from "../helper-functions/authToken.js";
 import LinearProgress from '@mui/material/LinearProgress';
-import { useNavigate } from "react-router-dom";
+import { Routes, Route, Link, useNavigate } from "react-router-dom";
 
-const pages = ['All Projects', 'My Projects'];
-const settings = ['Profile', 'Account', 'Logout'];
+const pages = [['All Projects', '/all-projects'], ['My Projects', '/my-projects']];
+const settings = [['Profile', '/profile'], ['Account', '/account'], ['Logout']];
 
 function Dashboard() {
   const [anchorElNav, setAnchorElNav] = useState(null);
@@ -128,8 +128,14 @@ function Dashboard() {
               }}
             >
               {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{page}</Typography>
+                <MenuItem 
+                  key={page[0]} 
+                  onClick={handleCloseNavMenu} 
+                  component={Link} 
+                  color="inherit" 
+                  underline="none"
+                  to={page[1]}>
+                  <Typography textAlign="center">{page[0]}</Typography>
                 </MenuItem>
               ))}
             </Menu>
@@ -154,11 +160,15 @@ function Dashboard() {
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (
               <Button
-                key={page}
+                key={page[0]}
                 onClick={handleCloseNavMenu}
                 sx={{ my: 2, color: 'white', display: 'block' }}
+                component={Link} 
+                color="inherit"
+                underline="none"
+                to={page[1]}
               >
-                {page}
+                {page[0]}
               </Button>
             ))}
           </Box>
@@ -187,17 +197,25 @@ function Dashboard() {
             >
               {settings.map((setting) =>{
                 //console.log('s: ', setting)
-                if (setting === 'Logout'){
+                if (setting[0] === 'Logout'){
                   return (
-                <MenuItem key={setting} onClick={handleLogout}>   
-                  <Typography textAlign="center">{setting}</Typography>
+                <MenuItem key={setting[0]} onClick={handleLogout}>   
+                  <Typography textAlign="center">{setting[0]}</Typography>
                 </MenuItem>
                   )
                 }
                 else {
                 return (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>   
-                  <Typography textAlign="center">{setting}</Typography>
+                <MenuItem key={setting[0]} onClick={handleCloseUserMenu} underline="none">   
+                  <Typography 
+                    textAlign="center"
+                    component={Link} 
+                    color="inherit"
+                    sx={{ textDecoration: 'none' }}
+                    to={setting[1]}
+                  >
+                    {setting[0]}
+                  </Typography>
                 </MenuItem>
               )
             }

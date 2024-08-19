@@ -69,11 +69,11 @@ export default function SignIn() {
           alert('email or password is incorrect')
         }
         else {
-          //navigate to dashboard page
+          //navigate to all-projects page
           setToken(resData.jwt)
           console.log(getToken())
-          console.log('navigate to dashboard')
-          navigate("/dashboard", { replace: true });
+          console.log('navigate to all-projects')
+          navigate("/all-projects", { replace: true });
           //setShowAlert(true)
           console.log(getToken())
         }
