@@ -6052,6 +6052,11 @@ is-upper-case@^1.1.0:
   dependencies:
     upper-case "^1.1.0"
 
+is-valid-abn@^1.3.4:
+  version "1.3.4"
+  resolved "https://registry.yarnpkg.com/is-valid-abn/-/is-valid-abn-1.3.4.tgz#6847529f8e89767746977f2f1d9efba398f6be1a"
+  integrity sha512-cumNbcT6MxhVtMbV9BycR9fLDqXCyzWYT0dpzGSQZwbztrtFW3kLhkbQDkqG3/b3VtQBXNSrSrBbmgZ0MmZmTw==
+
 is-windows@^1.0.1, is-windows@^1.0.2:
   version "1.0.2"
   resolved "https://registry.npmjs.org/is-windows/-/is-windows-1.0.2.tgz"
@@ -9733,6 +9738,11 @@ validate-npm-package-license@^3.0.1:
   dependencies:
     spdx-correct "^3.0.0"
     spdx-expression-parse "^3.0.0"
+
+validator@^13.12.0:
+  version "13.12.0"
+  resolved "https://registry.yarnpkg.com/validator/-/validator-13.12.0.tgz#7d78e76ba85504da3fee4fd1922b385914d4b35f"
+  integrity sha512-c1Q0mCiPlgdTVVVIJIrBuxNicYE+t/7oKeI9MWLj3fh/uq2Pxh/3eeWbVZ4OcGW1TUf53At0njHw5SMdA3tmMg==
 
 value-equal@^1.0.1:
   version "1.0.1"
