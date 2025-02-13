@@ -21,15 +21,21 @@ module.exports = (policyContext, config, { strapi }) => {
         }
       }
       else if (key === 'phoneNumber'){
-        if (!validator.isMobilePhone(value) ){
-          strapi.log.error('phone number is invalid');
-          return false
+        // phoneNumber is optional, so it can be null as well.
+        if ( value !== null){
+          if (!validator.isMobilePhone(value) ){
+            strapi.log.error('phone number is invalid');
+            return false
+          }
         }
       }
       else if (key === 'AbnNumber'){
-        if (!isValidABN(value) ) {
-          strapi.log.error('Abn number is invalid');
-          return false
+        // AbnNumber is optional, so it can be null as well.
+        if ( value !== null){
+          if (!isValidABN(value) ) {
+            strapi.log.error('Abn number is invalid');
+            return false
+          }
         }
       }
       else if (key === 'password'){
